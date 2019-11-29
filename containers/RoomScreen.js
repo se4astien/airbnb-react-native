@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRoute } from "@react-navigation/core";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
+import SwiperTest from "../components/SwiperTest";
 import {
   Text,
   View,
@@ -13,6 +14,7 @@ import {
   StyleSheet
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Swiper from "react-native-swiper";
 
 export default function RoomScreen(props) {
   // UseRoute permet d'indiquer que l'on reçoit des paramètres de la route précédente
@@ -34,7 +36,7 @@ export default function RoomScreen(props) {
       }
     };
     fetchData();
-  }, [params.roomId]); // WHY ?
+  }, [params.roomId]); // on récupère les paramètres de HomeScreen
 
   // MAP
   const markers = [
@@ -71,11 +73,13 @@ export default function RoomScreen(props) {
       ) : (
         <ScrollView>
           <View style={{ position: "relative" }}>
-            <Image
+            {/* <Image
               resizeMode="cover"
               style={{ height: 355, position: "relative" }}
               source={{ uri: room.photos[0] }}
-            />
+            /> */}
+            {/* // on passe les states en props */}
+            <SwiperTest room={room} />
             <View
               style={{
                 position: "absolute",
@@ -189,5 +193,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF5A5F"
   },
   review: { paddingLeft: 10, fontSize: 18 },
-  ratings: { flexDirection: "row" }
+  ratings: { flexDirection: "row" },
+
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#9DD6EB"
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#97CAE5"
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#92BBD9"
+  },
+  text: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold"
+  }
 });

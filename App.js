@@ -55,14 +55,13 @@ export default function App() {
         ) : userToken === null ? (
           // No token found, user isn't signed in // header : null => enlève le header par défaut
           <>
-            <Stack.Screen name="SignUp">
-              {/* // on renvoie vers la page SignUpScreen */}
-              {() => <SignUpScreen setToken={setToken} />}
-            </Stack.Screen>
-
             <Stack.Screen name="SignIn" options={{ header: () => null }}>
               {/* // on renvoie vers la page SignInScreen */}
               {() => <SignInScreen setToken={setToken} />}
+            </Stack.Screen>
+            <Stack.Screen name="SignUp">
+              {/* // on renvoie vers la page SignUpScreen */}
+              {() => <SignUpScreen setToken={setToken} />}
             </Stack.Screen>
           </>
         ) : (
