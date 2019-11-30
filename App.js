@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import { NavigationNativeContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -6,17 +6,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import RoomScreen from "./containers/RoomScreen";
-import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
+import ProfileScreen from "./containers/ProfileScreen";
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator(); // barre du bas
+const Stack = createStackNavigator(); // des écrans
 
 export default function App() {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   // fonction qui permet de vérifier si token existe
   const setToken = async token => {
@@ -31,7 +31,7 @@ export default function App() {
     setUserToken(token);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
@@ -57,7 +57,7 @@ export default function App() {
           <>
             <Stack.Screen name="SignIn" options={{ header: () => null }}>
               {/* // on renvoie vers la page SignInScreen */}
-              {() => <SignInScreen setToken={setToken} />}
+              {() => <SignInScreen setToken={setToken} setUserId={setUserId} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp">
               {/* // on renvoie vers la page SignUpScreen */}
@@ -73,8 +73,10 @@ export default function App() {
                   return {
                     tabBarIcon: ({ focused, color, size }) => {
                       let iconName;
-                      if (route.name === "Settings") {
-                        iconName = `ios-options`;
+                      if (route.name === "Profile") {
+                        iconName = `ios-contact`;
+                      } else if (route.name === "Map") {
+                        iconName = "ios-map";
                       } else {
                         iconName = `ios-home`;
                       }
@@ -123,24 +125,50 @@ export default function App() {
                       >
                         {() => <RoomScreen />}
                       </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
 
+                <Tab.Screen name="Map">
+                  {() => (
+                    <Stack.Navigator>
                       <Stack.Screen
-                        name="Profile"
-                        options={{ title: "User Profile" }}
+                        name="FullMap"
+                        options={{
+                          title: "Map Airbnb",
+                          headerStyle: { backgroundColor: "#FF5A5F" },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 22,
+                            fontWeight: "normal"
+                          },
+                          headerTintColor: "white"
+                        }}
                       >
-                        {() => <ProfileScreen />}
+                        {/* {() => <MapScreen />} */}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-                <Tab.Screen name="Settings">
+                <Tab.Screen name="Profile">
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
-                        options={{ title: "Settings" }}
+                        name="Profile"
+                        options={{
+                          title: "Profile User",
+                          headerStyle: { backgroundColor: "#FF5A5F" },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 22,
+                            fontWeight: "normal"
+                          },
+                          headerTintColor: "white"
+                        }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => (
+                          <ProfileScreen setToken={setToken} userId={userId} />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

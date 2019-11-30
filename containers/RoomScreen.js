@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRoute } from "@react-navigation/core";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
-import SwiperTest from "../components/SwiperTest";
+import Gallery from "../components/Gallery";
 import {
   Text,
   View,
@@ -13,21 +13,19 @@ import {
   Image,
   StyleSheet
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Swiper from "react-native-swiper";
 
-export default function RoomScreen(props) {
+export default function RoomScreen() {
   // UseRoute permet d'indiquer que l'on reçoit des paramètres de la route précédente
   const { params } = useRoute();
   const [isloading, setIsLoading] = useState(true);
   const [room, setRoom] = useState([]);
-  const [description, setDescription] = useState(true);
+  const [isDescriptionDisplayed, setIsDescriptionDisplayed] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://airbnb-api.now.sh/api/room/" + params.roomId
+          "https://airbnb-api.herokuapp.com/api/room/" + params.roomId
         );
         setRoom(response.data);
         setIsLoading(false);
@@ -73,13 +71,7 @@ export default function RoomScreen(props) {
       ) : (
         <ScrollView>
           <View style={{ position: "relative" }}>
-            {/* <Image
-              resizeMode="cover"
-              style={{ height: 355, position: "relative" }}
-              source={{ uri: room.photos[0] }}
-            /> */}
-            {/* // on passe les states en props */}
-            <SwiperTest room={room} />
+            <Gallery item={room} />
             <View
               style={{
                 position: "absolute",
@@ -129,24 +121,15 @@ export default function RoomScreen(props) {
           </View>
 
           <View style={{ padding: 20 }}>
-            <TouchableOpacity
+            <Text
+              style={{ fontSize: 18, lineHeight: 24, color: "grey" }}
               onPress={() => {
-                setDescription(!description); // change l'état de description à chaque clic (true et false)
+                setIsDescriptionDisplayed(!isDescriptionDisplayed); // change l'état de description à chaque clic (true et false)
               }}
+              numberOfLines={isDescriptionDisplayed === true ? 3 : 0}
             >
-              {description === true ? (
-                <Text
-                  numberOfLines={3}
-                  style={{ fontSize: 18, lineHeight: 24, color: "grey" }}
-                >
-                  {room.description}
-                </Text>
-              ) : (
-                <Text style={{ fontSize: 18, lineHeight: 24, color: "grey" }}>
-                  {room.description}
-                </Text>
-              )}
-            </TouchableOpacity>
+              {room.description}
+            </Text>
           </View>
 
           <MapView
@@ -189,8 +172,7 @@ export default function RoomScreen(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: "#FF5A5F"
+    paddingTop: Constants.statusBarHeight
   },
   review: { paddingLeft: 10, fontSize: 18 },
   ratings: { flexDirection: "row" },

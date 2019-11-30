@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 // permet de stocker les informations envoyés par l'utilisateur
 import { AsyncStorage } from "react-native";
 
-export default function SignInScreen({ setToken }) {
+export default function SignInScreen({ setToken, setUserId }) {
   const navigation = useNavigation(); // besoin pour aller vers SignUp
   // 1. Création des states
   const [email, setEmail] = useState("arno@airbnb-api.com");
@@ -53,7 +53,7 @@ export default function SignInScreen({ setToken }) {
             // 3. on fait la requête à axios pour se loguer
             // la requete va renvoyer un token
             const response = await axios.post(
-              "https://airbnb-api.now.sh/api/user/log_in",
+              "https://airbnb-api.herokuapp.com/api/user/log_in",
               {
                 email: email,
                 password: password
@@ -64,10 +64,14 @@ export default function SignInScreen({ setToken }) {
             // alert(JSON.stringify(response.data));
 
             // Enregistre le token dans AsyncStorage (équivalent au cookie)
-            await AsyncStorage.setItem("user", response.data.token);
+            // await AsyncStorage.setItem("user", response.data.token);
 
             // on met à jour userToken grâce à la fonction setToken
-            setToken(response.data.token);
+            if (response.data.token) {
+              setToken(response.data.token);
+            } else {
+              alert("Utilisateur non connu");
+            }
           }}
         >
           <View style={styles.login}>
@@ -79,6 +83,10 @@ export default function SignInScreen({ setToken }) {
           mode="contained"
           onPress={async () => {
             // l'utilisateur n'a pas de compte
+            // await setUserId(response.data._id);
+            // console.log(response.data.token);
+            // console.log(response.data._id);
+
             navigation.navigate("SignUp");
           }}
         >

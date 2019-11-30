@@ -1,5 +1,6 @@
-import React from "react";
-import { Button, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Button, Text, View, Image } from "react-native";
+import { useFocusEffect } from "@react-navigation/core";
 
 export default function SettingsScreen({ setToken }) {
   return (
@@ -11,6 +12,7 @@ export default function SettingsScreen({ setToken }) {
         onPress={() => {
           // quand logout, on change l'état token à null
           setToken(null);
+          // console.log(userId);
         }}
       />
     </View>

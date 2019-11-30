@@ -7,29 +7,46 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Switch
 } from "react-native";
 import { AsyncStorage } from "react-native"; // permet d'enregistrer les données de l'utilisateur
 import Constants from "expo-constants"; // utile quand on veut utiliser certains styles
 
 export default function SignUpScreen({ setToken }) {
-  const navigation = useNavigation(); // besoin pour aller vers la page HomeScreen
-
-  // 1. Mise en forme
   // 2. Création des états
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
-  const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [cgv, setCGV] = useState(false);
 
-  // 3. Interactions
+  // besoin pour aller vers la page HomeScreen
+  const navigation = useNavigation();
+
+  let isEnabled = false; // on créer une variable pour vérifier que tout est OK
+
+  // on fait une condition pous savoir si tous les champs sont remplis
+  if (
+    // si les champs sont différents de vide
+    email !== "" &&
+    userName !== "" &&
+    password !== "" &&
+    confirmPassword !== "" &&
+    password === confirmPassword &&
+    cgv === true
+  ) {
+    isEnabled = true; // alors tout est OK
+  }
+
+  // 1. Mise en page
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.welcome} style={{ alignItems: "center" }}>
+      <View style={{ padding: 40 }}>
         <TextInput
-          placeholder="Enter your email"
+          autoCapitalize={"none"}
+          placeholder="anemail@airbnb-api.com"
+          placeholderTextColor="white"
           style={styles.input}
           value={email}
           // onChangeText permet d'envoyer les infos de l'utilisateur à l'API
@@ -38,15 +55,9 @@ export default function SignUpScreen({ setToken }) {
           }}
         />
         <TextInput
-          placeholder="Enter your name"
-          style={styles.input}
-          value={name}
-          onChangeText={text => {
-            setName(text);
-          }}
-        />
-        <TextInput
+          autoCapitalize={"none"}
           placeholder="Enter your username"
+          placeholderTextColor="white"
           style={styles.input}
           value={userName}
           onChangeText={text => {
@@ -54,16 +65,10 @@ export default function SignUpScreen({ setToken }) {
           }}
         />
         <TextInput
-          placeholder="Enter your description"
-          style={styles.input}
-          value={userName}
-          onChangeText={text => {
-            setUserName(text);
-          }}
-        />
-        <TextInput
+          autoCapitalize={"none"}
           placeholder="Enter your password"
-          secureTextEntry={true} // remplace value="password" dans React
+          placeholderTextColor="white"
+          secureTextEntry={true}
           style={styles.input}
           value={password}
           onChangeText={text => {
@@ -71,37 +76,81 @@ export default function SignUpScreen({ setToken }) {
           }}
         />
         <TextInput
+          autoCapitalize={"none"}
           placeholder="Confirm your password"
-          secureTextEntry={true} // remplace value="password" dans React
+          placeholderTextColor="white"
           style={styles.input}
           value={confirmPassword}
           onChangeText={text => {
             setConfirmPassword(text);
           }}
         />
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{ marginTop: 30, color: "white", fontSize: 20, flex: 1 }}
+          >
+            Accepter les CVG
+          </Text>
+          <Switch
+            style={{
+              backgroundColor: "#FF0000",
+              borderRadius: 17,
+              marginTop: 30,
+              marginRight: 30
+            }}
+            value={cgv}
+            onValueChange={value => {
+              setCGV(value);
+            }}
+          />
+        </View>
 
         <TouchableOpacity
           onPress={async () => {
-            // 3. on fait la requête à axios pour se loguer
-            // la requete va renvoyer un token
-            const response = await axios.post(
-              "https://airbnb-api.now.sh/api/user/log_in",
-              {
-                email: email,
-                password: password
+            console.log("coucou");
+            console.log("email");
+            console.log(email);
+            console.log("userName");
+            console.log(userName);
+            console.log("password");
+            console.log(password);
+            console.log("confirmPassword");
+            console.log(confirmPassword);
+            console.log("cgv");
+            console.log(cgv);
+            //console.log(token);
+            console.log(setToken);
+
+            try {
+              console.log("1");
+              if (isEnabled === true) {
+                console.log("2");
+                const response = await axios.post(
+                  "https://airbnb-api.herokuapp.com/api/user/sign_up",
+                  {
+                    email: email,
+                    username: userName,
+                    password: password
+                  }
+                );
+                console.log("3");
+
+                // 3. Appeler le serveur pour créer un compte
+                // La requete va renvoyer un token
+                // On enregistre le token dans AsyncStorage (équivalent au cookie)
+                await AsyncStorage.setItem("user", response.data.token);
+                console.log("4");
+
+                // on met à jour userToken grâce à la fonction setToken
+                setToken(response.data.token);
+                console.log("5");
+                console.log(response.data.token);
+                // on renvoie vers la page HomeScreen
+                navigation.navigate("Home");
               }
-            );
-
-            // console.log(response.data);
-            // alert(JSON.stringify(response.data));
-
-            // Enregistre le token dans AsyncStorage (équivalent au cookie)
-            await AsyncStorage.setItem("user", response.data.token);
-
-            // on met à jour userToken grâce à la fonction setToken
-            setToken(response.data.token);
-            // on renvoie vers la page HomeScreen
-            navigation.navigate("HomeScreen");
+            } catch (error) {
+              alert("Email ou mot de passe incorrect");
+            }
           }}
         >
           <View style={styles.createAccount}>

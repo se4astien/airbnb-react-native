@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Text, View, Image, StyleSheet, FlatList } from "react-native";
+import { Text, View, Image, StyleSheet, FlatList, Button } from "react-native";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/core";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -12,7 +12,7 @@ export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
 
-  // cette fonction permet d'exécuter notre requête uniquement à la création du composantde l'appel à l'API
+  // cette fonction permet d'exécuter notre requête uniquement à la création du composant lors de l'appel à l'API
   // useEffect permet d'éxécuter les fonctions qui vont mettrent à jour les props et/ou les états
   useEffect(() => {
     const fetchData = async () => {
@@ -112,14 +112,16 @@ export default function HomeScreen() {
   );
 }
 
-/* <View>
-  <Button
-    title="Go to Profile"
-    onPress={() => {
-      navigation.navigate("Profile", { userId: 123 });
-    }}
-  />
-</View>; */
+{
+  <View>
+    <Button
+      title="Go to Profile"
+      onPress={() => {
+        navigation.navigate("Profile", { userId: 123 });
+      }}
+    />
+  </View>;
+}
 
 const styles = StyleSheet.create({
   container: {
