@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
 import {
@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Switch
 } from "react-native";
-import { AsyncStorage } from "react-native"; // permet d'enregistrer les données de l'utilisateur
 import Constants from "expo-constants"; // utile quand on veut utiliser certains styles
 
 export default function SignUpScreen({ setToken, setId }) {

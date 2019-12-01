@@ -16,7 +16,7 @@ const Stack = createStackNavigator(); // des écrans
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
-  const [iduser, setIduser] = useState(null); // A RAJOUTER !!
+  const [userId, setUserId] = useState(null);
 
   // fonction qui permet de vérifier si token existe
   const setToken = async token => {
@@ -31,14 +31,14 @@ export default function App() {
     setUserToken(token);
   };
 
-  // fonction qui permet de vérifier si id existe // A RAJOUTER !!
+  // fonction qui permet de vérifier si id existe
   const setId = async id => {
     if (id) {
-      await AsyncStorage.setItem("iduser", id);
+      await AsyncStorage.setItem("userId", id);
     } else {
-      await AsyncStorage.removeItem("iduser");
+      await AsyncStorage.removeItem("userId");
     }
-    setIduser(id);
+    setUserId(id);
   };
 
   useEffect(() => {
@@ -46,13 +46,13 @@ export default function App() {
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
       const userToken = await AsyncStorage.getItem("userToken");
-      const iduser = await AsyncStorage.getItem("iduser"); // A RAJOUTER !!
+      const userId = await AsyncStorage.getItem("userId");
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setIsLoading(false);
       setUserToken(userToken);
-      setIduser(iduser); // A RAJOUTER
+      setUserId(userId);
     };
 
     bootstrapAsync();
@@ -69,18 +69,9 @@ export default function App() {
           <>
             <Stack.Screen name="SignIn" options={{ header: () => null }}>
               {/* // on renvoie vers la page SignInScreen */}
-              {() => (
-                <SignInScreen
-                  // A RAJOUTER
-                  setToken={setToken}
-                  userToken={userToken} // A RAJOUTER
-                  setId={setId} // A RAJOUTER
-                />
-              )}
+              {() => <SignInScreen setToken={setToken} setId={setId} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp">
-              {/* // on renvoie vers la page SignUpScreen */}
-              {/* // A RAJOUTER */}
               {() => <SignUpScreen setToken={setToken} setId={setId} />}
             </Stack.Screen>
           </>
@@ -165,6 +156,7 @@ export default function App() {
                           headerTintColor: "white"
                         }}
                       >
+                        {/* // A FAIRE PLUS TARD */}
                         {/* {() => <MapScreen />} */}
                       </Stack.Screen>
                     </Stack.Navigator>
@@ -189,9 +181,9 @@ export default function App() {
                         {() => (
                           <ProfileScreen
                             setToken={setToken}
-                            iduser={iduser} // A RAJOUTER
-                            setId={setId} // A RAJOUTER
-                            userToken={userToken} // A RAJOUTER
+                            userId={userId}
+                            setId={setId}
+                            userToken={userToken}
                           />
                         )}
                       </Stack.Screen>

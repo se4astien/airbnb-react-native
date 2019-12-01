@@ -11,18 +11,18 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 
-export default function ProfileScreen({ setToken, userToken, setId, iduser }) {
+export default function ProfileScreen({ setToken, userToken, setId, userId }) {
   // 1. création des states
   const [isLoading, setIsLoading] = useState(true); // au départ le chargement est effectué
   const [user, setUser] = useState();
 
-  console.log(iduser); // 5de3fd17d5ceab0015be369c
+  console.log(userId); // 5de3fd17d5ceab0015be369c
   // 2. Appel get axios
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://airbnb-api.herokuapp.com/api/user/" + iduser,
+          "https://airbnb-api.herokuapp.com/api/user/" + userId,
           {
             headers: {
               Authorization: "Bearer " + userToken
