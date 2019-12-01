@@ -1,58 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AsyncStorage } from "react-native";
 import { NavigationNativeContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
-import RoomScreen from "./containers/RoomScreen";
-import SignInScreen from "./containers/SignInScreen";
-import SignUpScreen from "./containers/SignUpScreen";
 import ProfileScreen from "./containers/ProfileScreen";
+import SignInScreen from "./containers/SignInScreen";
+import SettingsScreen from "./containers/SettingsScreen";
+import SignUpScreen from "./containers/SignUpScreen";
+import FullMapScreen from "./containers/FullMapScreen";
 
 const Tab = createBottomTabNavigator(); // barre du bas
-const Stack = createStackNavigator(); // des écrans
+const Stack = createStackNavigator(); // DES ECRANS
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [userToken, setUserToken] = useState(null);
-  const [iduser, setIduser] = useState(null); // A RAJOUTER !!
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userToken, setUserToken] = React.useState(null);
+  const [iduser, setIduser] = React.useState(null); // ligne 108 ProfileScreenTest
 
-  // fonction qui permet de vérifier si token existe
   const setToken = async token => {
     if (token) {
-      // si plusieurs actions à faire, mettre async avant AsyncStorage
-      // On enregistre le token dans AsyncStorage (équivalent au cookie)
-      AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("userToken", token);
     } else {
-      // on supprime l'id
-      AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userToken");
     }
+
     setUserToken(token);
   };
 
-  // fonction qui permet de vérifier si id existe // A RAJOUTER !!
   const setId = async id => {
     if (id) {
       await AsyncStorage.setItem("iduser", id);
     } else {
       await AsyncStorage.removeItem("iduser");
     }
+
     setIduser(id);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
       const userToken = await AsyncStorage.getItem("userToken");
-      const iduser = await AsyncStorage.getItem("iduser"); // A RAJOUTER !!
+      const iduser = await AsyncStorage.getItem("iduser");
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setIsLoading(false);
       setUserToken(userToken);
-      setIduser(iduser); // A RAJOUTER
+      setIduser(iduser);
     };
 
     bootstrapAsync();
@@ -63,29 +61,43 @@ export default function App() {
       <Stack.Navigator>
         {isLoading ? (
           // We haven't finished checking for the token yet
-          <Stack.Screen name="Splash" component={() => null} />
+          <Stack.Screen name="Splash" component={() => null} /> // le load de screen
         ) : userToken === null ? (
-          // No token found, user isn't signed in // header : null => enlève le header par défaut
+          // No token found, user isn't signed in ///////////////////////////////////////////////////////
           <>
-            <Stack.Screen name="SignIn" options={{ header: () => null }}>
-              {/* // on renvoie vers la page SignInScreen */}
+            <Stack.Screen name="Login" options={{ header: () => null }}>
               {() => (
                 <SignInScreen
-                  // A RAJOUTER
                   setToken={setToken}
-                  userToken={userToken} // A RAJOUTER
-                  setId={setId} // A RAJOUTER
+                  userToken={userToken}
+                  setId={setId}
                 />
               )}
             </Stack.Screen>
-            <Stack.Screen name="SignUp">
-              {/* // on renvoie vers la page SignUpScreen */}
-              {/* // A RAJOUTER */}
+            <Stack.Screen
+              name="SignUp"
+              options={{
+                title: "",
+                headerTintColor: "white",
+                headerStyle: {
+                  backgroundColor: "#FF5A5F",
+                  shadowRadius: 0,
+                  shadowOffset: {
+                    height: 0
+                  }
+                },
+                headerTitleStyle: {
+                  color: "white",
+                  fontSize: 23,
+                  fontWeight: "300"
+                }
+              }}
+            >
               {() => <SignUpScreen setToken={setToken} setId={setId} />}
             </Stack.Screen>
           </>
         ) : (
-          // User is signed in
+          // User is signed in    ///////////////////////////////////////////////////////
           <Stack.Screen name="Tab" options={{ header: () => null }}>
             {() => (
               <Tab.Navigator
@@ -94,17 +106,17 @@ export default function App() {
                     tabBarIcon: ({ focused, color, size }) => {
                       let iconName;
                       if (route.name === "Profile") {
-                        iconName = `ios-contact`;
+                        iconName = `ios-person`;
                       } else if (route.name === "Map") {
-                        iconName = "ios-map";
+                        iconName = `ios-flag`;
                       } else {
-                        iconName = `ios-home`;
+                        iconName = `ios-list`;
                       }
                       return (
                         <Ionicons name={iconName} size={size} color={color} />
                       );
                     },
-                    title: route.name === "undefined" ? "Home" : route.name // know issue : route.name shouldn't be undefined
+                    title: route.name === "undefined" ? "List" : route.name // known issue : route.name shouldn't be undefined
                   };
                 }}
                 tabBarOptions={{
@@ -116,14 +128,17 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Home"
+                        name="List"
                         options={{
-                          title: "Mon Airbnb",
-                          headerStyle: { backgroundColor: "#FF5A5F" },
+                          title: "List Airbnb",
+                          headerTintColor: "white",
+                          headerStyle: {
+                            backgroundColor: "#FF5A5F"
+                          },
                           headerTitleStyle: {
                             color: "white",
-                            fontSize: 22,
-                            fontWeight: "normal"
+                            fontSize: 23,
+                            fontWeight: "300"
                           }
                         }}
                       >
@@ -131,24 +146,23 @@ export default function App() {
                       </Stack.Screen>
 
                       <Stack.Screen
-                        name="Room"
+                        name="Profile"
                         options={{
                           title: "Room",
+                          headerTintColor: "white",
                           headerStyle: { backgroundColor: "#FF5A5F" },
                           headerTitleStyle: {
                             color: "white",
-                            fontSize: 22,
-                            fontWeight: "normal"
-                          },
-                          headerTintColor: "white"
+                            fontSize: 23,
+                            fontWeight: "300"
+                          }
                         }}
                       >
-                        {() => <RoomScreen />}
+                        {() => <ProfileScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-
                 <Tab.Screen name="Map">
                   {() => (
                     <Stack.Navigator>
@@ -156,16 +170,18 @@ export default function App() {
                         name="FullMap"
                         options={{
                           title: "Map Airbnb",
-                          headerStyle: { backgroundColor: "#FF5A5F" },
+                          headerTintColor: "white",
+                          headerStyle: {
+                            backgroundColor: "#FF5A5F"
+                          },
                           headerTitleStyle: {
                             color: "white",
-                            fontSize: 22,
-                            fontWeight: "normal"
-                          },
-                          headerTintColor: "white"
+                            fontSize: 23,
+                            fontWeight: "300"
+                          }
                         }}
                       >
-                        {/* {() => <MapScreen />} */}
+                        {() => <FullMapScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -174,24 +190,26 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Profile"
+                        name="Settings"
                         options={{
-                          title: "Profile User",
-                          headerStyle: { backgroundColor: "#FF5A5F" },
+                          title: "Profile",
+                          headerTintColor: "white",
+                          headerStyle: {
+                            backgroundColor: "#FF5A5F"
+                          },
                           headerTitleStyle: {
                             color: "white",
-                            fontSize: 22,
-                            fontWeight: "normal"
-                          },
-                          headerTintColor: "white"
+                            fontSize: 23,
+                            fontWeight: "300"
+                          }
                         }}
                       >
                         {() => (
-                          <ProfileScreen
+                          <SettingsScreen
                             setToken={setToken}
-                            iduser={iduser} // A RAJOUTER
-                            setId={setId} // A RAJOUTER
-                            userToken={userToken} // A RAJOUTER
+                            iduser={iduser}
+                            setId={setId}
+                            userToken={userToken}
                           />
                         )}
                       </Stack.Screen>

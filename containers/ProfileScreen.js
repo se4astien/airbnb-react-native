@@ -9,32 +9,32 @@ import {
   StyleSheet,
   ScrollView
 } from "react-native";
-// import { useRoute } from "@react-navigation/core";
+import { useRoute } from "@react-navigation/core";
 import Constants from "expo-constants";
 
-export default function ProfileScreen({ setToken, setUserId }) {
-  // UseRoute permet d'indiquer que l'on reçoit des paramètres de la route précédente
-  // const { params } = useRoute();
+export default function ProfileScreen({ setToken, iduser, userToken, setId }) {
   // 1. création des states
   const [isLoading, setIsLoading] = useState(true); // au départ le chargement est effectué
-  const [profile, setProfile] = useState({}); // on récupère un objet
+  const [user, setUser] = useState();
+  // const [image, setImage] = useState(null);
+  // const [uploading, setUploading] = useState(false);
 
-  // const obj = useRoute();
-  // const params = obj.params;
-  // const profileId = params.profileId;
-
-  // const { userId } = useParams();
-
+  console.log(iduser);
   // 2. Appel get axios
+  console.log(1);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://airbnb-api.herokuapp.com/api/user/" + setToken
+          "https://airbnb-api.herokuapp.com/api/user/" + iduser,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken
+            }
+          }
         );
-        setProfile(response.data);
-        console.log(response.data);
-        setIsLoading(false); // le chargement est terminé
+        setUser(response.data);
+        setIsLoading(false);
       } catch (error) {
         alert("An error occured");
       }
@@ -51,14 +51,8 @@ export default function ProfileScreen({ setToken, setUserId }) {
         ) : (
           <View style={styles.center}>
             <Image style={styles.picture} />
-            <Text style={styles.username}>{profile.username}</Text>
-            <Text style={styles.description}>
-              Hello, I'm married, 2 kids, leaving in the center of Paris and
-              loving it. I rent my own place and manage a few others. For all of
-              them, I'll be happy to advise you on your stay in Paris, nice
-              places, best walks to reach them, shops, restaurants... I'll be
-              there. See you soon in Paris.
-            </Text>
+            <Text style={styles.username}>{user.account.username}</Text>
+            <Text style={styles.description}>{user.account.description}</Text>
 
             <Button
               style={styles.logOut}
@@ -66,6 +60,7 @@ export default function ProfileScreen({ setToken, setUserId }) {
               onPress={() => {
                 // quand logout, on change l'état token à null
                 setToken(null);
+                setId(null);
                 // console.log(userId);
               }}
             />

@@ -107,24 +107,10 @@ export default function SignUpScreen({ setToken }) {
 
         <TouchableOpacity
           onPress={async () => {
-            console.log("coucou");
-            console.log("email");
-            console.log(email);
-            console.log("userName");
-            console.log(userName);
-            console.log("password");
-            console.log(password);
-            console.log("confirmPassword");
-            console.log(confirmPassword);
-            console.log("cgv");
-            console.log(cgv);
-            //console.log(token);
-            console.log(setToken);
-
             try {
-              console.log("1");
+              //console.log("1");
               if (isEnabled === true) {
-                console.log("2");
+                //console.log("2");
                 const response = await axios.post(
                   "https://airbnb-api.herokuapp.com/api/user/sign_up",
                   {
@@ -133,17 +119,16 @@ export default function SignUpScreen({ setToken }) {
                     password: password
                   }
                 );
-                console.log("3");
+                //console.log("3");
 
                 // 3. Appeler le serveur pour créer un compte
                 // La requete va renvoyer un token
-                // On enregistre le token dans AsyncStorage (équivalent au cookie)
-                await AsyncStorage.setItem("user", response.data.token);
-                console.log("4");
 
-                // on met à jour userToken grâce à la fonction setToken
+                //console.log("4");
+
+                // on met à jour token grâce à la fonction setToken
                 setToken(response.data.token);
-                console.log("5");
+                //console.log("5");
                 console.log(response.data.token);
                 // on renvoie vers la page HomeScreen
                 navigation.navigate("Home");
