@@ -15,8 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 export default function SignInScreen({ setToken, setId }) {
   const navigation = useNavigation(); // besoin pour aller vers SignUp
   // 1. Création des states
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("arno@airbnb-api.com");
+  const [password, setPassword] = useState("password01");
 
   console.log(email);
 

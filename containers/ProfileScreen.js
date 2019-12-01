@@ -15,8 +15,6 @@ export default function ProfileScreen({ setToken, userToken, setId, iduser }) {
   // 1. création des states
   const [isLoading, setIsLoading] = useState(true); // au départ le chargement est effectué
   const [user, setUser] = useState();
-  // const [image, setImage] = useState(null);
-  // const [uploading, setUploading] = useState(false);
 
   console.log(iduser); // 5de3fd17d5ceab0015be369c
   // 2. Appel get axios
@@ -44,7 +42,7 @@ export default function ProfileScreen({ setToken, userToken, setId, iduser }) {
   return (
     <ScrollView style={styles.container}>
       <>
-        {isLoading === false ? (
+        {isLoading === true ? (
           <ActivityIndicator />
         ) : (
           <View style={styles.center}>
@@ -56,7 +54,7 @@ export default function ProfileScreen({ setToken, userToken, setId, iduser }) {
               style={styles.logOut}
               title="Log Out"
               onPress={() => {
-                // quand logout, on change l'état token à null
+                // quand logout, on change l'état token et id à null
                 setToken(null);
                 setId(null);
                 // console.log(userId);
