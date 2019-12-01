@@ -11,15 +11,12 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
-// permet de stocker les informations envoyés par l'utilisateur
-import { AsyncStorage } from "react-native";
 
-export default function SignInScreen({ setToken, setUserId }) {
+export default function SignInScreen({ setToken, setId }) {
   const navigation = useNavigation(); // besoin pour aller vers SignUp
   // 1. Création des states
-  const [email, setEmail] = useState("arno@airbnb-api.com");
-  const [password, setPassword] = useState("password01");
-  // const navigation = useNavigation(); // besoin si je vais vers SignUp
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   console.log(email);
 
@@ -63,12 +60,12 @@ export default function SignInScreen({ setToken, setUserId }) {
             // console.log(response.data);
             // alert(JSON.stringify(response.data));
 
-            // Enregistre le token dans AsyncStorage (équivalent au cookie)
-            // await AsyncStorage.setItem("user", response.data.token);
-
             // on met à jour userToken grâce à la fonction setToken
             if (response.data.token) {
               setToken(response.data.token);
+              // console.log(response.data.token);
+              setId(response.data._id);
+              // console.log(response.data._id);
             } else {
               alert("Utilisateur non connu");
             }

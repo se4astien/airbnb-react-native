@@ -9,19 +9,17 @@ import {
   StyleSheet,
   ScrollView
 } from "react-native";
-import { useRoute } from "@react-navigation/core";
 import Constants from "expo-constants";
 
-export default function ProfileScreen({ setToken, iduser, userToken, setId }) {
+export default function ProfileScreen({ setToken, userToken, setId, iduser }) {
   // 1. création des states
   const [isLoading, setIsLoading] = useState(true); // au départ le chargement est effectué
   const [user, setUser] = useState();
   // const [image, setImage] = useState(null);
   // const [uploading, setUploading] = useState(false);
 
-  console.log(iduser);
+  console.log(iduser); // 5de3fd17d5ceab0015be369c
   // 2. Appel get axios
-  console.log(1);
   useEffect(() => {
     const fetchData = async () => {
       try {

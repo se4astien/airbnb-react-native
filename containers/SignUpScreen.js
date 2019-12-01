@@ -13,7 +13,8 @@ import {
 import { AsyncStorage } from "react-native"; // permet d'enregistrer les données de l'utilisateur
 import Constants from "expo-constants"; // utile quand on veut utiliser certains styles
 
-export default function SignUpScreen({ setToken }) {
+export default function SignUpScreen({ setToken, setId }) {
+  // on récupère setId pour la page Profile
   // 2. Création des états
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
@@ -126,10 +127,12 @@ export default function SignUpScreen({ setToken }) {
 
                 //console.log("4");
 
-                // on met à jour token grâce à la fonction setToken
+                // on récupère token et _id grâce à la fonction setToken et setId
                 setToken(response.data.token);
-                //console.log("5");
+                setId(response.data._id);
+
                 console.log(response.data.token);
+                console.log(response.data._id);
                 // on renvoie vers la page HomeScreen
                 navigation.navigate("Home");
               }
