@@ -15,7 +15,10 @@ Signup, Login, List of Appartments, Appartment, Around Me and Profile.
 ![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/appartment.png?s=100)
 ![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png?s=100)
 
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="100" height="100">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="250">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="250">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="250">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="250">
 
 
 ## Packages
