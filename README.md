@@ -8,7 +8,7 @@ Signup, Login, List of Appartments, Appartment, Around Me and Profile.
 
 ## Screenshots
 
-![](https://raw.githubusercontent.com/se4astien/airbnb-react-native/master/screenshots/aribnb-mobile.gif)
+![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/airbnb-mobile.gif)
 
 ## Packages
 
