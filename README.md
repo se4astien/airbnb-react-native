@@ -10,23 +10,22 @@ Signup, Login, List of Appartments, Appartment, Around Me and Profile.
 
 ## Screenshots
 
-<div style="display:flex";>
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/login.png" width="200">
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/home.png" width="200">
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/appartment.png" width="200">
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="200">
+<div style="display:flex; justify-content:center">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/login.png" width="25%">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/home.png" width="25%">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/appartment.png" width="25%">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="25%">
 </div>
 
 ## Packages
 
 ``` react-native
-<ul>
-<li>React Navigation v5</li>
-<li>Expo ActionSheet</li>
-<li>KeyboardAwareScrollView</li>
-<li>React Native Snap Carousel</li>
-<li>React Native Maps</li>
-<li>Axios</li>
+React Navigation
+Expo ActionSheet
+KeyboardAwareScrollView
+React Native Snap Carousel
+React Native Maps
+Axios
 ```
 
 This project works on iOS and Android.
