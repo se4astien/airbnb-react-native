@@ -10,15 +10,10 @@ Signup, Login, List of Appartments, Appartment, Around Me and Profile.
 
 ## Screenshots
 
-![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/login.png?s=100)
-![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/home.png?s=100)
-![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/appartment.png?s=100)
-![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png?s=100)
-
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/login.png" width="200">
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/home.png" width="200">
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/appartment.png" width="200">
-<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="200">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/login.png" width="300">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/home.png" width="300">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/appartment.png" width="300">
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/map.png" width="300">
 
 
 ## Packages
