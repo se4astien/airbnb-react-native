@@ -2,7 +2,7 @@
 
 Airbnb Clone using React Native.
 
-![](https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/airbnb-mobile.gif)
+<img src="https://github.com/se4astien/airbnb-react-native/blob/master/screenshots/airbnb-mobile.gif">
 
 6 screens availables :  
 Signup, Login, List of Appartments, Appartment, Around Me and Profile.
